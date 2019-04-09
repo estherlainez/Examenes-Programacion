@@ -1,15 +1,32 @@
 package Examen_2EvaluacionCorregido;
 
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Scanner;
+
+
+
+
+
+
+
 
 
 public class UsoMain {
 
 	private static Scanner teclado;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException, ClassNotFoundException {
 		int opcion;
 		teclado = new Scanner (System.in);
 		System.out.println("1. Crear objetos en un array de 5 posiciones de trabajadores, y estudiantes");
@@ -29,7 +46,85 @@ public class UsoMain {
 		arrayT[3]=new Personal("Tomas", "calle su casa", "SS123", "Administrativo", 8);
 		arrayT[4]=new Profesor ("maria", "calle su casa","SS123", "Sistemas", "Profesor", 10);
 		
+		File f = new File("c:\\archivos\\ejercicioArchivos.dat");
+		
+		
+		Estudiante s=null;
+		Trabajador j=null;
+		int i=0,a=0;
+		if(f.exists()) {
+			try {
+				FileInputStream filein = new FileInputStream(f);
+				ObjectInputStream objectin = new ObjectInputStream(filein);
+				
+				while(true){
+							
+					arrayE[i]=(Estudiante) objectin.readObject();
+					i++;
+						
+					System.out.println("Estudiante "+s);
+					
+					arrayT[a]=(Trabajador) objectin.readObject();			
+					a++;
+					
+					
+					System.out.println("Trabajador "+j);
+				}
+				
+			}catch(EOFException e) {
+				
+				System.out.println("Fin del fichero");
+			}catch(IOException ex) {
+				System.out.println("Algo falla"+ex.getMessage());
+				
+			}
 			
+		}else {
+			arrayE[0]=new Estudiante ("Esther Lainez", "calle su casa", 37, "66777888-R", 4);
+			i++;
+			arrayE[1]=new Estudiante ("Jorge Rivas", "calle su casa", 37, "56789098-R", 3);
+			i++;
+			arrayE[2]=new Estudiante ("Javi Falces", "calle su casa", 37, "678909876-R", 2);
+			i++;
+			
+			arrayT[0]=new Trabajador ("Paqui Garcia", "calle su casa",  "Profesor", 10);
+			a++;
+			arrayT[1]=new Trabajador ("Antonio Gomez", "calle su casa",  "Profesor", 21);
+			a++;
+		}
+		
+		FileOutputStream fileout = new FileOutputStream(f);
+		ObjectOutputStream objectout = new ObjectOutputStream(fileout);
+		
+		Estudiante p = null;
+		Trabajador t=null;
+		
+		
+		try {
+			ObjectOutputStream stream= new ObjectOutputStream(fileout);
+					for( i=0;i<arrayE.length;i++) {
+						objectout.writeObject(p);
+					}
+					for( i=0;i<arrayT.length;i++) {
+						objectout.writeObject(t);
+					}
+					
+			
+					if (stream != null){
+						stream.close () ;	
+					}
+					
+		}catch(EOFException e) {
+				System.out.println("Fin del fichero");
+		}catch(IOException ex) {
+				System.out.println("Algo ha fallado");
+		
+		}
+			
+		
+		
+	
+		
 		do {						
 			System.out.println("MENU");
 			System.out.println("1. Calcular las horas de trabajo en total de trabajadores y estudiantes");
