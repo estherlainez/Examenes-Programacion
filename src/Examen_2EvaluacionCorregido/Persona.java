@@ -1,7 +1,7 @@
 package Examen_2EvaluacionCorregido;
 
 
-abstract class Persona {
+abstract class Persona implements java.io.Serializable{
 	
 	private String nombre;
 	private String direccion;

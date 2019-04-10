@@ -58,11 +58,11 @@ public class UsoMain {
 				ObjectInputStream objectin = new ObjectInputStream(filein);
 				
 				while(true){
-							
+					
 					arrayE[i]=(Estudiante) objectin.readObject();
 					i++;
-						
-					System.out.println("Estudiante "+s);
+					
+					System.out.println("Estudiante "+arrayE);
 					
 					arrayT[a]=(Trabajador) objectin.readObject();			
 					a++;
